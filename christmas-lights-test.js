@@ -4,7 +4,7 @@ const { ChristmasLights, DEFAULT_FILLING } = require("./christmas-lights");
 let lightGrid;
 
 beforeEach(() => {
-    lightGrid = new ChristmasLights(1000, 1000, DEFAULT_FILLING);
+    lightGrid = new ChristmasLights(1000, 1000, 0);
 });
 
 it("should initialize lightGrid with given height and width", () => {
@@ -13,7 +13,7 @@ it("should initialize lightGrid with given height and width", () => {
 });
 
 it("should get and set cell values", () => {
-    lightGrid.setCell(2, 2, 1);
+    lightGrid.setCell(2, 2, DEFAULT_FILLING);
     expect(lightGrid.getCell(2, 2)).toBe(DEFAULT_FILLING);
 });
 
@@ -24,5 +24,16 @@ it("turn on 0,0 through 999,999 would turn on (or leave on) every light", () => 
         for (let j = 0; j < 1000; j++) {
             expect(lightGrid.getCell(i, j)).toBe(DEFAULT_FILLING);
         }
+    }
+});
+
+it("toggle 0,0 through 999,0 would toggle the first line of 1000 lights,\
+turning off the ones that were on, and turning on the ones that were off.", () => {
+    lightGrid.setCell(0, 0, DEFAULT_FILLING);
+    lightGrid.toggle({ x: 0, y: 0 }, { x: 999, y: 0 });
+
+    expect(lightGrid.getCell(0, 0)).toBe(0);
+    for (let i = 1; i < 1000; i++) {
+        expect(lightGrid.getCell(i, 0)).toBe(DEFAULT_FILLING);
     }
 });
