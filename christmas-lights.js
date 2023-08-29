@@ -31,14 +31,14 @@ class ChristmasLights {
         return this.#grid[i][j];
     }
 
-    setCell(i, j, value) {
-        this.#grid[i][j] = value;
+    setCell({ x, y }, value) {
+        this.#grid[x][y] = value;
     }
 
     setOn(from, to) {
         for (let i = from.x; i <= to.x; i++) {
             for (let j = from.y; j <= to.y; j++) {
-                this.setCell(i, j, DEFAULT_FILLING);
+                this.setCell({ x: i, y: j }, DEFAULT_FILLING);
             }
         }
     }
@@ -47,8 +47,7 @@ class ChristmasLights {
         for (let i = from.x; i <= to.x; i++) {
             for (let j = from.y; j <= to.y; j++) {
                 this.setCell(
-                    i,
-                    j,
+                    { x: i, y: j },
                     this.getCell(i, j) === DEFAULT_FILLING ? 0 : DEFAULT_FILLING
                 );
             }
@@ -58,7 +57,7 @@ class ChristmasLights {
     setOff(from, to) {
         for (let i = from.x; i <= to.x; i++) {
             for (let j = from.y; j <= to.y; j++) {
-                this.setCell(i, j, 0);
+                this.setCell({ x: i, y: j }, 0);
             }
         }
     }
