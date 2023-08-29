@@ -54,6 +54,14 @@ class ChristmasLights {
             }
         }
     }
+
+    setOff(from, to) {
+        for (let i = from.x; i <= to.x; i++) {
+            for (let j = from.y; j <= to.y; j++) {
+                this.setCell(i, j, 0);
+            }
+        }
+    }
 }
 
 module.exports = { ChristmasLights, DEFAULT_FILLING };

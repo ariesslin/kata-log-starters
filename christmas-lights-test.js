@@ -37,3 +37,15 @@ turning off the ones that were on, and turning on the ones that were off.", () =
         expect(lightGrid.getCell(i, 0)).toBe(DEFAULT_FILLING);
     }
 });
+
+it("turn off 499,499 through 500,500 would turn off (or leave off) the middle four lights.", () => {
+    lightGrid.setCell(499, 499, DEFAULT_FILLING);
+    lightGrid.setCell(499, 500, DEFAULT_FILLING);
+    lightGrid.setOff({ x: 499, y: 499 }, { x: 500, y: 500 });
+
+    for (let i = 499; i <= 500; i++) {
+        for (let j = 499; j <= 500; j++) {
+            expect(lightGrid.getCell(i, j)).toBe(0);
+        }
+    }
+});
