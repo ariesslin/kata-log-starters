@@ -38,7 +38,8 @@ class ChristmasLights {
     setOn(from, to) {
         for (let i = from.x; i <= to.x; i++) {
             for (let j = from.y; j <= to.y; j++) {
-                this.setCell({ x: i, y: j }, DEFAULT_FILLING);
+                const currentValue = this.getCell(i, j);
+                this.setCell({ x: i, y: j }, currentValue + 1);
             }
         }
     }

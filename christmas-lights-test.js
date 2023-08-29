@@ -17,14 +17,26 @@ it("should get and set cell values", () => {
     expect(lightGrid.getCell(2, 2)).toBe(DEFAULT_FILLING);
 });
 
-it("turn on 0,0 through 999,999 would turn on (or leave on) every light", () => {
-    lightGrid.setOn({ x: 0, y: 0 }, { x: 999, y: 999 });
+describe("setOn", () => {
+    it("turn on 0,0 through 999,999 would turn on (or leave on) every light", () => {
+        lightGrid.setOn({ x: 0, y: 0 }, { x: 999, y: 999 });
 
-    for (let i = 0; i < 1000; i++) {
-        for (let j = 0; j < 1000; j++) {
-            expect(lightGrid.getCell(i, j)).toBe(DEFAULT_FILLING);
+        for (let i = 0; i < 1000; i++) {
+            for (let j = 0; j < 1000; j++) {
+                expect(lightGrid.getCell(i, j)).toBe(DEFAULT_FILLING);
+            }
         }
-    }
+    });
+
+    it("turn on 0,0 through 0,0 would increase the total brightness by 1.", () => {
+        const x = 0;
+        const y = 0;
+        lightGrid.setOn({ x, y }, { x, y });
+        expect(lightGrid.getCell(x, y)).toBe(1);
+
+        lightGrid.setOn({ x, y }, { x, y });
+        expect(lightGrid.getCell(x, y)).toBe(2);
+    });
 });
 
 it("toggle 0,0 through 999,0 would toggle the first line of 1000 lights,\
