@@ -39,7 +39,7 @@ class ChristmasLights {
         for (let i = from.x; i <= to.x; i++) {
             for (let j = from.y; j <= to.y; j++) {
                 const currentValue = this.getCell(i, j);
-                this.setCell({ x: i, y: j }, currentValue + 1);
+                this.setCell({ x: i, y: j }, currentValue + DEFAULT_FILLING);
             }
         }
     }
@@ -47,9 +47,10 @@ class ChristmasLights {
     toggle(from, to) {
         for (let i = from.x; i <= to.x; i++) {
             for (let j = from.y; j <= to.y; j++) {
+                const currentValue = this.getCell(i, j);
                 this.setCell(
                     { x: i, y: j },
-                    this.getCell(i, j) === DEFAULT_FILLING ? 0 : DEFAULT_FILLING
+                    currentValue + 2 * DEFAULT_FILLING
                 );
             }
         }
@@ -60,7 +61,10 @@ class ChristmasLights {
             for (let j = from.y; j <= to.y; j++) {
                 const currentValue = this.getCell(i, j);
                 if (currentValue > 0) {
-                    this.setCell({ x: i, y: j }, currentValue - 1);
+                    this.setCell(
+                        { x: i, y: j },
+                        currentValue - DEFAULT_FILLING
+                    );
                 }
             }
         }

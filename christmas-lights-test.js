@@ -39,15 +39,32 @@ describe("setOn", () => {
     });
 });
 
-it("toggle 0,0 through 999,0 would toggle the first line of 1000 lights,\
+describe("toggle", () => {
+    it("toggle 0,0 through 999,0 would toggle the first line of 1000 lights,\
 turning off the ones that were on, and turning on the ones that were off.", () => {
-    lightGrid.setCell({ x: 0, y: 0 }, DEFAULT_FILLING);
-    lightGrid.toggle({ x: 0, y: 0 }, { x: 999, y: 0 });
+        lightGrid.setCell({ x: 0, y: 0 }, DEFAULT_FILLING);
+        lightGrid.toggle({ x: 0, y: 0 }, { x: 999, y: 0 });
 
-    expect(lightGrid.getCell(0, 0)).toBe(0);
-    for (let i = 1; i < 1000; i++) {
-        expect(lightGrid.getCell(i, 0)).toBe(DEFAULT_FILLING);
-    }
+        expect(lightGrid.getCell(0, 0)).toBe(3);
+        for (let i = 1; i < 1000; i++) {
+            expect(lightGrid.getCell(i, 0)).toBe(2);
+        }
+    });
+
+    it("toggle 0,0 through 999,999 would increase the total brightness by 2000000", () => {
+        lightGrid.toggle({ x: 0, y: 0 }, { x: 999, y: 999 });
+
+        expect(lightGrid.getCell(0, 0)).toBe(2);
+
+        let totalBrightness = 0;
+        for (let i = 0; i < 1000; i++) {
+            for (let j = 0; j < 1000; j++) {
+                totalBrightness += lightGrid.getCell(i, j);
+            }
+        }
+
+        expect(totalBrightness).toBe(2000000);
+    });
 });
 
 describe("setOff", () => {
