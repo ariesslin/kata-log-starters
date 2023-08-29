@@ -50,14 +50,31 @@ turning off the ones that were on, and turning on the ones that were off.", () =
     }
 });
 
-it("turn off 499,499 through 500,500 would turn off (or leave off) the middle four lights.", () => {
-    lightGrid.setCell({ x: 499, y: 499 }, DEFAULT_FILLING);
-    lightGrid.setCell({ x: 499, y: 500 }, DEFAULT_FILLING);
-    lightGrid.setOff({ x: 499, y: 499 }, { x: 500, y: 500 });
+describe("setOff", () => {
+    it("turn off 499,499 through 500,500 would turn off (or leave off) the middle four lights.", () => {
+        lightGrid.setCell({ x: 499, y: 499 }, DEFAULT_FILLING);
+        lightGrid.setCell({ x: 499, y: 500 }, DEFAULT_FILLING);
+        lightGrid.setOff({ x: 499, y: 499 }, { x: 500, y: 500 });
 
-    for (let i = 499; i <= 500; i++) {
-        for (let j = 499; j <= 500; j++) {
-            expect(lightGrid.getCell(i, j)).toBe(0);
+        for (let i = 499; i <= 500; i++) {
+            for (let j = 499; j <= 500; j++) {
+                expect(lightGrid.getCell(i, j)).toBe(0);
+            }
         }
-    }
+    });
+
+    it("turn off actually means that you should decrease the brightness of those lights by 1, to a minimum of zero.", () => {
+        const x = 0;
+        const y = 0;
+        lightGrid.setCell({ x, y }, 2);
+
+        lightGrid.setOff({ x, y }, { x, y });
+        expect(lightGrid.getCell(x, y)).toBe(1);
+
+        lightGrid.setOff({ x, y }, { x, y });
+        expect(lightGrid.getCell(x, y)).toBe(0);
+
+        lightGrid.setOff({ x, y }, { x, y });
+        expect(lightGrid.getCell(x, y)).toBe(0);
+    });
 });

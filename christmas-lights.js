@@ -58,7 +58,10 @@ class ChristmasLights {
     setOff(from, to) {
         for (let i = from.x; i <= to.x; i++) {
             for (let j = from.y; j <= to.y; j++) {
-                this.setCell({ x: i, y: j }, 0);
+                const currentValue = this.getCell(i, j);
+                if (currentValue > 0) {
+                    this.setCell({ x: i, y: j }, currentValue - 1);
+                }
             }
         }
     }
