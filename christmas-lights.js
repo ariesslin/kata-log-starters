@@ -1,5 +1,7 @@
 "use strict";
 
+const DEFAULT_FILLING = 1;
+
 class ChristmasLights {
     #width;
     #height;
@@ -32,6 +34,14 @@ class ChristmasLights {
     setCell(i, j, value) {
         this.#grid[i][j] = value;
     }
+
+    setOn(from, to) {
+        for (let i = from.x; i <= to.x; i++) {
+            for (let j = from.y; j <= to.y; j++) {
+                this.setCell(i, j, DEFAULT_FILLING);
+            }
+        }
+    }
 }
 
-module.exports = ChristmasLights;
+module.exports = { ChristmasLights, DEFAULT_FILLING };
